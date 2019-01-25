@@ -38,6 +38,8 @@ public class Player : MonoBehaviour {
                 SelectedPlanet.Selected = false;
                 SelectedPlanet = null;
             }
+
+            GameManager.instance.UpdateAllPlanets();
         }
 
         // Select To Move
