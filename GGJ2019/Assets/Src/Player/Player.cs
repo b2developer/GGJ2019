@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-    public Planet planet;
-    public PlayerCamera playerCamera;
+    public Planet CurrentPlanet;
+    public float distanceFromPlanet;
+
+    [HideInInspector] public Planet SelectedPlanet;
+    [HideInInspector] public PlayerCamera playerCamera;
+
+    bool MovingToNewPlanet;
 
     private void Start() {
         playerCamera = Camera.main.GetComponent<PlayerCamera>();
+        playerCamera.player = this;
     }
 
     private void OnDrawGizmos() {
-        if (planet != null && planet.PlanetsInZone != null) {
-            for (int i = 0; i < planet.PlanetsInZone.Count; i++) {
-                Gizmos.DrawLine(planet.transform.position, planet.PlanetsInZone[i].transform.position);
+        if (SelectedPlanet != null && SelectedPlanet.PlanetsInZone != null) {
+            for (int i = 0; i < SelectedPlanet.PlanetsInZone.Count; i++) {
+                Gizmos.DrawLine(SelectedPlanet.transform.position, SelectedPlanet.PlanetsInZone[i].transform.position);
             }
         }
     }
@@ -25,16 +31,30 @@ public class Player : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit)) {
-                if (planet != null) planet.Selected = false;
-                planet = hit.transform.gameObject.GetComponent<Planet>();
-                if (planet != null) planet.Selected = true;
-            } else if (planet != null) {
-                planet.Selected = false;
-                planet = null;
+                if (SelectedPlanet != null) SelectedPlanet.Selected = false;
+                SelectedPlanet = hit.transform.gameObject.GetComponent<Planet>();
+                if (SelectedPlanet != null) SelectedPlanet.Selected = true;
+            } else if (SelectedPlanet != null) {
+                SelectedPlanet.Selected = false;
+                SelectedPlanet = null;
             }
         }
 
         // Select To Move
-        
+        if (SelectedPlanet != null && Input.GetKeyDown(KeyCode.Return)) {
+            CurrentPlanet = SelectedPlanet;
+            MovingToNewPlanet = true;
+        }
+
+        // Move to new planet
+        if (MovingToNewPlanet) {
+            Vector3 direction = CurrentPlanet.transform.position - transform.position;
+            transform.position = Vector3.Lerp(transform.position, CurrentPlanet.transform.position, Time.deltaTime);
+
+            if (Vector3.Distance(transform.position, CurrentPlanet.transform.position) < distanceFromPlanet) {
+                MovingToNewPlanet = false;
+                playerCamera.pivot = null;
+            }
+        }
     }
 }

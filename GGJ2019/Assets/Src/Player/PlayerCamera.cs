@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCamera : MonoBehaviour {
+    [HideInInspector] public Player player;
+
     public GameObject pivot;
 
     public float distance = 5.0f;
@@ -18,6 +20,16 @@ public class PlayerCamera : MonoBehaviour {
     public bool isDragging;
 
     void LateUpdate() {
+        if (player == null) return;
+        if (player.CurrentPlanet == null) {
+            pivot = player.gameObject;
+        } else {
+            if (pivot == null) pivot = player.CurrentPlanet.gameObject;
+            else if (pivot != player.CurrentPlanet.gameObject) {
+                pivot = player.gameObject;
+            }
+        }
+
         distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 5, distanceMin, distanceMax);
 
         if (Input.GetAxis("Mouse X") > 0.001f || Input.GetAxis("Mouse X") < -0.001f || Input.GetAxis("Mouse Y") > 0.001f || Input.GetAxis("Mouse Y") < -0.001f) {
