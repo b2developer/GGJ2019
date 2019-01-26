@@ -9,6 +9,11 @@ public class Player : MonoBehaviour {
     [HideInInspector] public Planet SelectedPlanet;
     [HideInInspector] public PlayerCamera playerCamera;
 
+    [Header("Resources")]
+    public int scrap;
+    public int energy;
+    public int people;
+
     bool MovingToNewPlanet;
 
     private void Start() {
@@ -46,6 +51,15 @@ public class Player : MonoBehaviour {
             if (CurrentPlanet.PlanetsInZone.Contains(SelectedPlanet.gameObject)) {
                 CurrentPlanet = SelectedPlanet;
                 MovingToNewPlanet = true;
+            }
+        }
+
+        // Warp
+        if (Input.GetKey(KeyCode.Space)) {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++) {
+                //if (Physics.Raycast(ray, ))
             }
         }
 

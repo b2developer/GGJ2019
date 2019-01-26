@@ -45,9 +45,14 @@ public class PlanetSystemGeneration : MonoBehaviour {
             // Generate Zone
             Zone z = new Zone();
             z.go = new GameObject("Zone");
+            z.go.layer = 9;
+
             z.size = Random.Range(MinSystemSize, MaxSystemSize);
             if (j != 0) z.go.transform.position = Random.insideUnitSphere.normalized * (zones[j - 1].size + z.size);
             z.planets = new List<GameObject>();
+
+            SphereCollider c = z.go.AddComponent<SphereCollider>();
+            c.radius = z.size / 5;
 
             int planetAmount = Random.Range(MinPlanets, MaxPlanets);
 
@@ -60,7 +65,8 @@ public class PlanetSystemGeneration : MonoBehaviour {
                 planet.transform.parent = z.go.transform;
 
                 // Ceate colider
-                planet.AddComponent<SphereCollider>();
+                SphereCollider sc = planet.AddComponent<SphereCollider>();
+                sc.radius = 1;
 
                 // Set Planet Position
                 Vector3 PlanetPosition;

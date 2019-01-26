@@ -17,8 +17,12 @@ public class GameManager : MonoBehaviour {
         } }
 
     [HideInInspector] public Player player;
+    [HideInInspector] public PlanetSystemGeneration planetSystemGeneration;
     [HideInInspector] public Material lineRendererMat_Dark;
     [HideInInspector] public Material lineRendererMat_Light;
+    [HideInInspector] public Material lineRendererMat_Blue;
+
+
     public Planet[] planets;
 
     [HideInInspector] public bool loading;
@@ -31,6 +35,8 @@ public class GameManager : MonoBehaviour {
 
         player = GameObject.FindObjectOfType<Player>();
         planets = GameObject.FindObjectsOfType<Planet>();
+        planetSystemGeneration = GameObject.FindObjectOfType<PlanetSystemGeneration>();
+
 
         // Set Line Renderer Dark
         lineRendererMat_Dark = new Material(Shader.Find("Unlit/LineShader"));
@@ -39,6 +45,9 @@ public class GameManager : MonoBehaviour {
         // Set Line Renderer Light
         lineRendererMat_Light = new Material(Shader.Find("Unlit/LineShader"));
         lineRendererMat_Light.SetColor("_Color", new Color(0, 1, 0, 0.5f));
+
+        lineRendererMat_Blue = new Material(Shader.Find("Unlit/LineShader"));
+        lineRendererMat_Blue.SetColor("_Color", new Color(0, 0, 1, 0.5f));
 
         init = true;
         gm = this;

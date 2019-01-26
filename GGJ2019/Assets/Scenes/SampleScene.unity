@@ -283,7 +283,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &534669906
 MonoBehaviour:
@@ -638,7 +638,7 @@ GameObject:
   - component: {fileID: 782529414}
   - component: {fileID: 782529411}
   - component: {fileID: 782529410}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,6 +660,9 @@ MonoBehaviour:
   distanceFromPlanet: 3
   SelectedPlanet: {fileID: 0}
   playerCamera: {fileID: 0}
+  scrap: 0
+  energy: 0
+  people: 0
 --- !u!65 &782529411
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -684,7 +687,7 @@ Transform:
   m_Children:
   - {fileID: 1544598204}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &796473041
 GameObject:
@@ -1070,8 +1073,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
+  planetSystemGeneration: {fileID: 0}
   lineRendererMat_Dark: {fileID: 0}
   lineRendererMat_Light: {fileID: 0}
+  lineRendererMat_Blue: {fileID: 0}
   planets: []
   loading: 0
   loadingText: {fileID: 917449904}

@@ -44,11 +44,7 @@ public class PlayerCamera : MonoBehaviour {
         }
 
         Quaternion rotation = Quaternion.Euler(y, x, 0);
-        
-        RaycastHit hit;
-        if (Physics.Linecast(pivot.transform.position, transform.position, out hit, 1 >> 9)) {
-            distance -= hit.distance;
-        }
+
         Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
         Vector3 position = rotation * negDistance + pivot.transform.position;
 

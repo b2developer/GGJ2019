@@ -40,12 +40,6 @@ public class Planet : MonoBehaviour {
             if (goPlanet[i].GetComponent<Planet>() != null) PlanetsInZone.Add(goPlanet[i].gameObject);
         }
 
-        // Get material and set up new instance
-        //OutlineMat = new Material(Shader.Find("Outlined/CustomSelectable"));
-        //OutlineMat.SetColor("_OutlineColor", Color.green);
-        //GetComponent<MeshRenderer>().sharedMaterial = OutlineMat;
-
-
         // Line Renderer Creation
         for (int i = 0; i < PlanetsInZone.Count; i++) {
             Planet p = PlanetsInZone[i].GetComponent<Planet>();
@@ -92,10 +86,10 @@ public class Planet : MonoBehaviour {
         }
     }
 
-    private void OnDrawGizmosSelected() {
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(transform.position, ZoneSize);
-    }
+    // private void OnDrawGizmosSelected() {
+    //     Gizmos.color = Color.cyan;
+    //     Gizmos.DrawWireSphere(transform.position, ZoneSize);
+    // }
 
     private void LateUpdate() {
         if (Selected) {
