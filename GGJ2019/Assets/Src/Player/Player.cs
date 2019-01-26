@@ -167,17 +167,21 @@ public class Player : MonoBehaviour {
             if (GoingToNextPlace == true) {
                 GoingToNextPlace = false;
 
-                db_currentID = Random.Range(0, db.DATA.Count);
+                if (CurrentPlanet.visited == false) {
+                    CurrentPlanet.visited = true;
 
-                // Set popup text
-                text_title.text = db.DATA[db_currentID].title;
-                text_message.text = db.DATA[db_currentID].message;
+                    db_currentID = Random.Range(0, db.DATA.Count);
 
-                text_option1.text = db.DATA[db_currentID].Option1;
-                text_option2.text = db.DATA[db_currentID].Option2;
-                text_option3.text = db.DATA[db_currentID].Option3;
+                    // Set popup text
+                    text_title.text = db.DATA[db_currentID].title;
+                    text_message.text = db.DATA[db_currentID].message;
 
-                showPopup = true;
+                    text_option1.text = db.DATA[db_currentID].Option1;
+                    text_option2.text = db.DATA[db_currentID].Option2;
+                    text_option3.text = db.DATA[db_currentID].Option3;
+
+                    showPopup = true;
+                }
             }
    
         }

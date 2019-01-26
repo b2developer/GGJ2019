@@ -136,6 +136,7 @@ public class PlanetSystemGeneration : MonoBehaviour {
                     if (j == 0) {
                         GameManager.instance.player.CurrentPlanet = p;
                         GameManager.instance.player.CurrentZone = z;
+                        GameManager.instance.player.playerCamera.pivot = p.gameObject;
                     }
                 }
                 else {
