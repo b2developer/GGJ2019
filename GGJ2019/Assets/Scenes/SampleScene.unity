@@ -113,6 +113,53 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &461528356
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 461528358}
+  - component: {fileID: 461528357}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &461528357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 461528356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c891389222151774f9fb44cd74ef5566, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 4df8d1aaee8737d46b73a23f8db8f656, type: 2}
+  m_NumberOfContinents: 5
+  m_ContinentSizeMax: 1
+  m_ContinentSizeMin: 0.1
+  m_NumberOfHills: 5
+  m_HillSizeMax: 1
+  m_HillSizeMin: 0.1
+--- !u!4 &461528358
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 461528356}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.4382806, y: 4.904621, z: 2.824}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &534669902
 GameObject:
   m_ObjectHideFlags: 0
@@ -424,8 +471,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 075edbf0505ef334489f23b5ba39e0e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinSystems: 50
-  MaxSystems: 50
+  MinSystems: 5
+  MaxSystems: 5
   MinSystemDistance: 10
   MaxSystemDistance: 200
   MinSystemSize: 50

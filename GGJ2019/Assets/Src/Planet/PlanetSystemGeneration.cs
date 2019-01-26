@@ -12,6 +12,7 @@ public class PlanetSystemGeneration : MonoBehaviour {
     public float MaxSystemDistance = 200;
     public float MinSystemSize = 50;
     public float MaxSystemSize = 150;
+    public int PlanetsLoaded = 0;
 
     [Header("Zone Info")]
     public int MinPlanets = 10;
@@ -85,7 +86,7 @@ public class PlanetSystemGeneration : MonoBehaviour {
                 }
                 
                 z.planets.Add(planet);
-
+                PlanetsLoaded++;
                 yield return null;
             }
             zones.Add(z);

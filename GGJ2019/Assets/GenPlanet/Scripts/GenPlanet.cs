@@ -34,7 +34,7 @@ public class GenPlanet : MonoBehaviour
         // to work with.
 
         InitAsIcosohedron();
-        Subdivide(3);
+        Subdivide(1);
 
         // When we begin extruding polygons, we'll need each one to know who its immediate
         //neighbors are. Calculate that now.
@@ -158,7 +158,7 @@ public class GenPlanet : MonoBehaviour
         m_Polygons.Add(new Polygon( 9,  8,  1));
     }
 
-    public void Subdivide(int recursions)
+    void Subdivide(int recursions)
     {
         var midPointCache = new Dictionary<int, int>();
 
