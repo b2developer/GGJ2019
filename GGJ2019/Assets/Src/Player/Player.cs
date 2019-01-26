@@ -29,6 +29,8 @@ public class Player : MonoBehaviour {
     DataBase db;
     int db_currentID;
 
+    GameObject highlightPlanet;
+
     PlanetSystemGeneration.Zone ZoneToWarp;
     bool MovingToNewPlanet;
     bool Warp;
@@ -38,6 +40,18 @@ public class Player : MonoBehaviour {
         db.Init();
         playerCamera = Camera.main.GetComponent<PlayerCamera>();
         playerCamera.player = this;
+
+        // Create highlightPlanet
+        highlightPlanet = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        highlightPlanet.transform.localScale = new Vector3(5, 5, 5);
+        highlightPlanet.name = "WarpRedical";
+        highlightPlanet.AddComponent<Billboard>();
+        MeshRenderer wpmr = highlightPlanet.GetComponent<MeshRenderer>();
+        wpmr.sharedMaterial = new Material(Shader.Find("Unlit/CutoutTransparentColor"));
+        wpmr.sharedMaterial.SetTexture("_MainTex", GameManager.instance.planetSystemGeneration.WarpRedical);
+        wpmr.sharedMaterial.SetColor("_Color", new Color(0, 1, 0, 1));
+        highlightPlanet.SetActive(false);
+
     }
 
     private void OnDrawGizmos() {
@@ -57,8 +71,17 @@ public class Player : MonoBehaviour {
             if (Physics.Raycast(ray, out hit)) {
                 if (SelectedPlanet != null) SelectedPlanet.Selected = false;
                 SelectedPlanet = hit.transform.gameObject.GetComponent<Planet>();
-                if (SelectedPlanet != null) SelectedPlanet.Selected = true;
+                if (SelectedPlanet != null && CurrentPlanet.PlanetsInZone.Contains(SelectedPlanet.gameObject)) {
+                    SelectedPlanet.Selected = true;
+                    highlightPlanet.SetActive(true);
+                    highlightPlanet.transform.position = SelectedPlanet.transform.position;
+                } else if (SelectedPlanet != null) {
+                    highlightPlanet.SetActive(false);
+                    SelectedPlanet.Selected = false;
+                    SelectedPlanet = null;
+                }
             } else if (SelectedPlanet != null) {
+                highlightPlanet.SetActive(false);
                 SelectedPlanet.Selected = false;
                 SelectedPlanet = null;
             }
@@ -68,7 +91,6 @@ public class Player : MonoBehaviour {
         // Select To Move
         if (SelectedPlanet != null && Input.GetKeyDown(KeyCode.Return) && !showPopup) {
             if (CurrentPlanet.PlanetsInZone.Contains(SelectedPlanet.gameObject)) {
-
                 int energyAmount = (int)Vector3.Distance(transform.position, SelectedPlanet.transform.position);
                 if (energy >= energyAmount) {
                     CurrentPlanet = SelectedPlanet;
@@ -85,7 +107,8 @@ public class Player : MonoBehaviour {
 
             // Show warp points
             for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++)
-                GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(0).gameObject.SetActive(this);
+                if (GameManager.instance.planetSystemGeneration.zones[i].go != CurrentZone.go)
+                    GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(0).gameObject.SetActive(this);
 
             RaycastHit hit;
             for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++) {
@@ -101,8 +124,6 @@ public class Player : MonoBehaviour {
                             } else {
                                 // TODO: display gui error
                             }
-
-                            
                         }
                     }
                 } else {

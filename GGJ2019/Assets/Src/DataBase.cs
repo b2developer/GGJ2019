@@ -65,6 +65,13 @@ public class DataBase : MonoBehaviour {
             "Option 3", 1000, 1000, 1000  // Scrap, Energy, People
             ));
 
+        DATA.Add(new DB(
+            "Holder",
+            "Me is being me in the wassin in the wasin",
 
+            "yes 1", 1000, 1000, 1000, // Scrap, Energy, People
+            "no 2", 1000, 1000, 1000, // Scrap, Energy, People
+            "possibly 3", 1000, 1000, 1000  // Scrap, Energy, People
+            ));
     }
 }

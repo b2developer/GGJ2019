@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class ShipAnimator : MonoBehaviour
 {
-    private Animator[] animators;
+    public Animator[] animators;
     
 	// Use this for initialization
 	void Awake() { animators = GetComponentsInChildren<Animator>(); Debug.Log(animators.Length); }
