@@ -7,36 +7,54 @@ public class GameManager : MonoBehaviour {
     static GameManager gm;
     public static GameManager instance { get {
             if (gm == null) {
-                return GameObject.FindObjectOfType<GameManager>();
+                GameManager _gm = GameObject.FindObjectOfType<GameManager>();
+                _gm.Init();
+                return _gm;
             } else {
                 return gm;
             }
         } }
 
-    public Player player;
-    public Material lineRendererMat_Dark;
-    public Material lineRendererMat_Light;
+    [HideInInspector] public Player player;
+    [HideInInspector] public Material lineRendererMat_Dark;
+    [HideInInspector] public Material lineRendererMat_Light;
     public Planet[] planets;
 
-    private void Awake() {
-        gm = this;
+    bool init = false;
+    
+    private void Init() {
+        UnityThread.initUnityThread();
+
         player = GameObject.FindObjectOfType<Player>();
         planets = GameObject.FindObjectsOfType<Planet>();
-    }
 
-    private void Start() {
         // Set Line Renderer Dark
         lineRendererMat_Dark = new Material(Shader.Find("Unlit/LineShader"));
-        lineRendererMat_Dark.SetColor("_Color", new Color(1, 1, 1, 0.1f));
+        lineRendererMat_Dark.SetColor("_Color", new Color(1, 1, 1, 0.2f));
 
         // Set Line Renderer Light
         lineRendererMat_Light = new Material(Shader.Find("Unlit/LineShader"));
-        lineRendererMat_Light.SetColor("_Color", new Color(1, 1, 1, 0.5f));
+        lineRendererMat_Light.SetColor("_Color", new Color(0, 1, 0, 1));
+
+        init = true;
+        gm = this;
     }
 
-    public void UpdateAllPlanets() {
+    private void Start() {
+        if (!init) Init();
+    }
+
+    public void UpdateAllPlanetMaterials() {
         for (int i = 0; i < planets.Length; i++) {
             planets[i].UpdateLineMaterials();
+        }
+    }
+
+    public void UpdateAllPlanetLines() {
+        planets = GameObject.FindObjectsOfType<Planet>();
+
+        for (int i = 0; i < planets.Length; i++) {
+            planets[i].UpdateLines();
         }
     }
 }

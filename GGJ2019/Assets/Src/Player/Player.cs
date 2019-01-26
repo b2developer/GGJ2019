@@ -39,13 +39,14 @@ public class Player : MonoBehaviour {
                 SelectedPlanet = null;
             }
 
-            GameManager.instance.UpdateAllPlanets();
         }
 
         // Select To Move
         if (SelectedPlanet != null && Input.GetKeyDown(KeyCode.Return)) {
-            CurrentPlanet = SelectedPlanet;
-            MovingToNewPlanet = true;
+            if (CurrentPlanet.PlanetsInZone.Contains(SelectedPlanet.gameObject)) {
+                CurrentPlanet = SelectedPlanet;
+                MovingToNewPlanet = true;
+            }
         }
 
         // Move to new planet
@@ -57,6 +58,8 @@ public class Player : MonoBehaviour {
                 MovingToNewPlanet = false;
                 playerCamera.pivot = null;
             }
+
+            GameManager.instance.UpdateAllPlanetMaterials();
         }
     }
 }
