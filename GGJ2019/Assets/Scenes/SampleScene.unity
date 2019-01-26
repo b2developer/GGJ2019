@@ -656,10 +656,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4fbb69da49559438ca2cb81d7025e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentPlanet: {fileID: 0}
   distanceFromPlanet: 3
   SelectedPlanet: {fileID: 0}
+  CurrentPlanet: {fileID: 0}
   playerCamera: {fileID: 0}
+  CurrentZone:
+    go: {fileID: 0}
+    size: 0
+    planets: []
   scrap: 0
   energy: 0
   people: 0
@@ -723,6 +727,7 @@ MonoBehaviour:
   MinSystemSize: 50
   MaxSystemSize: 200
   PlanetsLoaded: 0
+  WarpRedical: {fileID: 2800000, guid: febfc0fb1d56b5947b4f442c99ede570, type: 3}
   MinPlanets: 10
   MaxPlanets: 20
   MinPlanetsDistance: 10

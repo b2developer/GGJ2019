@@ -85,11 +85,12 @@ public class Planet : MonoBehaviour {
             }
         }
     }
-
-    // private void OnDrawGizmosSelected() {
-    //     Gizmos.color = Color.cyan;
-    //     Gizmos.DrawWireSphere(transform.position, ZoneSize);
-    // }
+    
+    public void UpdateLintMatToBlue() {
+        for (int i = 0; i < LineTo.Count; i++) {
+            lineRenderers[i].sharedMaterial = GameManager.instance.lineRendererMat_Blue;
+        }
+    }
 
     private void LateUpdate() {
         if (Selected) {

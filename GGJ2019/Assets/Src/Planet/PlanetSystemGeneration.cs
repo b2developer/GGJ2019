@@ -13,6 +13,7 @@ public class PlanetSystemGeneration : MonoBehaviour {
     public float MinSystemSize = 50;
     public float MaxSystemSize = 150;
     public int PlanetsLoaded = 0;
+    public Texture2D WarpRedical;
 
     [Header("Zone Info")]
     public int MinPlanets = 10;
@@ -51,8 +52,15 @@ public class PlanetSystemGeneration : MonoBehaviour {
             if (j != 0) z.go.transform.position = Random.insideUnitSphere.normalized * (zones[j - 1].size + z.size);
             z.planets = new List<GameObject>();
 
-            SphereCollider c = z.go.AddComponent<SphereCollider>();
-            c.radius = z.size / 5;
+            // Add collider
+            if (j != 0) {
+                SphereCollider c = z.go.AddComponent<SphereCollider>();
+                c.radius = 10;
+            }
+
+            // Add Zone system
+            ZoneSystem zs = z.go.AddComponent<ZoneSystem>();
+            zs.zone = z;
 
             int planetAmount = Random.Range(MinPlanets, MaxPlanets);
 
@@ -64,10 +72,24 @@ public class PlanetSystemGeneration : MonoBehaviour {
                 planet.name = "Planet";
                 planet.transform.parent = z.go.transform;
 
+                // Create billboard
+                if (i == 0) {
+                    GameObject billboard = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                    billboard.transform.localScale = new Vector3(15, 15, 15);
+                    billboard.name = "WarpRedical";
+                    billboard.transform.parent = planet.transform;
+                    billboard.AddComponent<Billboard>();
+                    MeshRenderer wpmr = billboard.GetComponent<MeshRenderer>();
+                    wpmr.sharedMaterial = new Material(Shader.Find("Unlit/Transparent Cutout"));
+                    wpmr.sharedMaterial.SetTexture("_MainTex", WarpRedical);
+
+                    billboard.SetActive(false);
+                }
+
                 // Ceate colider
                 SphereCollider sc = planet.AddComponent<SphereCollider>();
                 sc.radius = 1;
-
+                
                 // Set Planet Position
                 Vector3 PlanetPosition;
                 if (i == 0) PlanetPosition = z.go.transform.position;
@@ -84,7 +106,10 @@ public class PlanetSystemGeneration : MonoBehaviour {
                 Planet p = planet.AddComponent<Planet>();
                 if (i == 0) {
                     p.ZoneSize = Random.Range(MinPlanetsDistance, MaxPlanetsDistance);
-                    if (j == 0) GameManager.instance.player.CurrentPlanet = p;
+                    if (j == 0) {
+                        GameManager.instance.player.CurrentPlanet = p;
+                        GameManager.instance.player.CurrentZone = z;
+                    }
                 }
                 else {
                     p.ZoneSize = Vector3.Distance(planet.transform.position, z.planets[i - 1].transform.position);
