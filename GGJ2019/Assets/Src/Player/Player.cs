@@ -75,7 +75,15 @@ public class Player : MonoBehaviour {
                         for (int j = 0; j < hit.transform.childCount; j++) {
                             hit.transform.GetChild(j).GetComponent<Planet>().UpdateLintMatToBlue();
                             ZoneToWarp = hit.transform.gameObject.GetComponent<ZoneSystem>().zone;
-                            Warp = true;
+
+                            int energyAmount = (int)Vector3.Distance(transform.position, ZoneToWarp.go.transform.position);
+                            if (energy >= energyAmount) {
+                                Warp = true;
+                            } else {
+                                // TODO: display gui error
+                            }
+
+                            
                         }
                     }
                 } else {
@@ -85,24 +93,13 @@ public class Player : MonoBehaviour {
                 }
             }
 
-
+            if (Input.GetMouseButtonDown(0) && !playerCamera.isDragging) {
+                WarpShip();
+            }
         }
         // Warp
         else if (Input.GetKeyUp(KeyCode.Space)) {
-            GameManager.instance.UpdateAllPlanetMaterials();
-            if (Warp) {
-                SphereCollider sc = CurrentZone.go.AddComponent<SphereCollider>();
-                sc.radius = 10;
-
-                CurrentZone = ZoneToWarp;
-                Destroy(CurrentZone.go.GetComponent<SphereCollider>());
-
-                // Move to
-                CurrentPlanet = ZoneToWarp.planets[0].GetComponent<Planet>();
-                MovingToNewPlanet = true;
-            }
-            for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++)
-                GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(0).gameObject.SetActive(false);
+            WarpShip();
         }
 
         // Move to new planet
@@ -118,6 +115,44 @@ public class Player : MonoBehaviour {
             }
 
             GameManager.instance.UpdateAllPlanetMaterials();
+        } else {
+            orbit();
         }
+    }
+
+    float x;
+    void orbit() {
+        x += 50 * Time.deltaTime;
+
+        Quaternion rotation = Quaternion.Euler(0, x, 0);
+        
+        Vector3 negDistance = new Vector3(0.0f, 0.0f, -3);
+        Vector3 position = rotation * negDistance + CurrentPlanet.transform.position;
+
+        transform.rotation = rotation;
+        transform.position = position;
+        transform.Rotate(new Vector3(0, -90, 0));
+    }
+
+    void WarpShip() {
+        GameManager.instance.UpdateAllPlanetMaterials();
+        if (Warp) {
+            SphereCollider sc = CurrentZone.go.AddComponent<SphereCollider>();
+            sc.radius = 10;
+
+            int energyAmount = (int)Vector3.Distance(transform.position, ZoneToWarp.go.transform.position);
+            Debug.Log(energyAmount);
+            energy -= energyAmount;
+
+            CurrentZone = ZoneToWarp;
+            Destroy(CurrentZone.go.GetComponent<SphereCollider>());
+
+            // Move to
+            CurrentPlanet = ZoneToWarp.planets[0].GetComponent<Planet>();
+            MovingToNewPlanet = true;
+        }
+        for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++)
+            GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(0).gameObject.SetActive(false);
+
     }
 }
