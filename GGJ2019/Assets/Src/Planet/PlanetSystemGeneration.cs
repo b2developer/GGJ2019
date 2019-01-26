@@ -39,6 +39,28 @@ public class PlanetSystemGeneration : MonoBehaviour {
         StartCoroutine( GeneratePlanetSystems() );
     }
 
+    
+    struct DB {
+        string title;
+        string message;
+
+        string Option1;
+        int Option1_Scrap;
+        int Option1_Energy;
+        int Option1_Peaple;
+
+        string Option2;
+        int Option2_Scrap;
+        int Option2_Energy;
+        int Option2_Peaple;
+
+        string Option3;
+        int Option3_Scrap;
+        int Option3_Energy;
+        int Option3_Peaple;
+    }
+
+
     IEnumerator GeneratePlanetSystems() {
         int zoneAmount = Random.Range(MinSystems, MaxSystems);
         
