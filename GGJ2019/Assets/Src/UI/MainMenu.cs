@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour {
 
-    //public GameObject menu;
-    //public GameManager GM;
+    public GameObject resources;
 
 	public void Exit() {
         Application.Quit();
@@ -14,6 +13,8 @@ public class MainMenu : MonoBehaviour {
     public void StartGame() {
         GameManager.instance.loading = false;
         GameManager.instance.planetSystemGeneration.StartGeneratePlanetSystems();
+        resources.SetActive(true);
+        
         this.gameObject.SetActive(false);
     }
 

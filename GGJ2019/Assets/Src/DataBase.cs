@@ -57,21 +57,53 @@ public class DataBase : MonoBehaviour {
     public void Init() {
 
         DATA.Add(new DB(
-            "Title",
-            "Message",
+            "Discharge Distress",
+            "Waves of seething energy from the Cataclysm are dangerously near. " +
+            "Adjusting your flight path to skim across the waves could increase your " +
+            "energy reserves significantly. As you ponder, the comms suddenly light up with an audio message - " +
+            "*This is an official request for assistance in the evacuation of our planet, there's no one else close enough. Please help us* ",
 
-            "Option 1", 1000, 1000, 1000, // Scrap, Energy, People
-            "Option 2", 1000, 1000, 1000, // Scrap, Energy, People
-            "Option 3", 1000, 1000, 1000  // Scrap, Energy, People
+            "Help the evacuation", 0, 0, 1, // Scrap, Energy, People
+            "Siphon the energy", 0, 100, 0, // Scrap, Energy, People
+            "Ignore", 0, 0, 0  // Scrap, Energy, People
             ));
 
         DATA.Add(new DB(
-            "Holder",
-            "Me is being me in the wassin in the wasin",
+            "Generator Scrap",
+            "Wrecked ships and ancient hulls litter the space around you. ",
 
-            "yes 1", 1000, 1000, 1000, // Scrap, Energy, People
-            "no 2", 1000, 1000, 1000, // Scrap, Energy, People
-            "possibly 3", 1000, 1000, 1000  // Scrap, Energy, People
+            "Scavange for scrap", 100, 0, 0, // Scrap, Energy, People
+            "Scavange for energy", 0, 100, 0, // Scrap, Energy, People
+            "Scavange for both", 50, 50, 0  // Scrap, Energy, People
+            ));
+
+        DATA.Add(new DB(
+            "Burning Crater",
+            "A crashed trader has managed to turn the burning crater of their crash landing into " +
+            "a venerable trading post, but the Cataclysm has driven people away. The trader requests help. ",
+
+            "Evacuate the trader ", 0, 0, 1, // Scrap, Energy, People
+            "Take the wrecked trading ship for extra power", 0, 100, 0, // Scrap, Energy, People
+            "Take the unused areas appart for scrap", 100, 0, 0  // Scrap, Energy, People
+            ));
+
+        DATA.Add(new DB(
+            "Floating Tools",
+            "Upon scanning the surface, tools and equipment appear to be hovering above the ground. " +
+            "Though there seems to be no sign of life, there is hazardous material floating as well.",
+
+            "Send a team to retrieve scrap  ",200, 0, -1, // Scrap, Energy, People
+            "Syphon energy from the anti gravity field", 0, 100, 0, // Scrap, Energy, People
+            "Leave without risk", 0, 0, 0  // Scrap, Energy, People
+            ));
+
+        DATA.Add(new DB(
+            "Kharernian Nomads",
+            "Kharernian Nomads are leaving their temporary post to escape the Cataclysm, and offer supplies.",
+
+            "Take their spare energy", 0, 50, 1, // Scrap, Energy, People
+            "Take their spare scrap", 50, 0, 0, // Scrap, Energy, People
+            "Offer to take some of them faster", 0, 0, 3  // Scrap, Energy, People
             ));
     }
 }
