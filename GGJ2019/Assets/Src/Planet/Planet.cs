@@ -11,6 +11,7 @@ public class Planet : MonoBehaviour {
     [HideInInspector] public List<GameObject> PlanetsInZone = new List<GameObject>();
     [HideInInspector] public List<LineRenderer> lineRenderers = new List<LineRenderer>();
     public List<Planet> LineTo = new List<Planet>();
+    public bool visited = false;
 
     // Private
     Material OutlineMat;
