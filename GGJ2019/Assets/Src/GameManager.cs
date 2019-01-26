@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
         lineRendererMat_Blue = new Material(Shader.Find("Unlit/LineShader"));
         lineRendererMat_Blue.SetColor("_Color", new Color(0, 1, 1, 1));
 
+        loading = true;
         init = true;
         gm = this;
     }

@@ -36,10 +36,15 @@ public class PlanetSystemGeneration : MonoBehaviour {
     public bool ShowPlanetGizmos;
 
     private void Awake() {
-        StartCoroutine( GeneratePlanetSystems() );
+        //StartCoroutine( GeneratePlanetSystems() );
     }
 
-    
+    public void StartGeneratePlanetSystems() {
+        StartCoroutine(GeneratePlanetSystems());
+
+    }
+
+
     struct DB {
         string title;
         string message;

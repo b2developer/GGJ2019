@@ -63,6 +63,11 @@ public class Player : MonoBehaviour {
     }
 
     private void Update() {
+        if (CurrentPlanet == null) {
+            Debug.LogWarning("No Current Planet");
+            return;
+        }
+
         // Highlight Planet
         if (Input.GetMouseButtonDown(0) && !playerCamera.isDragging) {
             RaycastHit hit;
