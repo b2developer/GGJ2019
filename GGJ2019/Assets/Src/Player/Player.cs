@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Player : MonoBehaviour {
     
@@ -16,12 +17,25 @@ public class Player : MonoBehaviour {
     public int energy;
     public int people;
 
-    bool MovingToNewPlanet;
+    [Header("Popup")]
+    public GameObject Popup;
+    public TextMeshProUGUI text_title;
+    public TextMeshProUGUI text_message;
+    public TextMeshProUGUI text_option1;
+    public TextMeshProUGUI text_option2;
+    public TextMeshProUGUI text_option3;
+    bool showPopup;
+    bool GoingToNextPlace;
+    DataBase db;
+    int db_currentID;
 
     PlanetSystemGeneration.Zone ZoneToWarp;
+    bool MovingToNewPlanet;
     bool Warp;
 
     private void Start() {
+        db = new DataBase();
+        db.Init();
         playerCamera = Camera.main.GetComponent<PlayerCamera>();
         playerCamera.player = this;
     }
@@ -52,15 +66,20 @@ public class Player : MonoBehaviour {
         }
 
         // Select To Move
-        if (SelectedPlanet != null && Input.GetKeyDown(KeyCode.Return)) {
+        if (SelectedPlanet != null && Input.GetKeyDown(KeyCode.Return) && !showPopup) {
             if (CurrentPlanet.PlanetsInZone.Contains(SelectedPlanet.gameObject)) {
-                CurrentPlanet = SelectedPlanet;
-                MovingToNewPlanet = true;
+
+                int energyAmount = (int)Vector3.Distance(transform.position, SelectedPlanet.transform.position);
+                if (energy >= energyAmount) {
+                    CurrentPlanet = SelectedPlanet;
+                    MovingToNewPlanet = true;
+                    energy -= energyAmount;
+                }
             }
         }
 
         // Warp Check
-        if (Input.GetKey(KeyCode.Space)) {
+        if (Input.GetKey(KeyCode.Space) && !showPopup) {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(Camera.main.transform.position, ray.direction * 1000);
 
@@ -98,12 +117,14 @@ public class Player : MonoBehaviour {
             }
         }
         // Warp
-        else if (Input.GetKeyUp(KeyCode.Space)) {
+        else if (Input.GetKeyUp(KeyCode.Space) && !showPopup) {
             WarpShip();
         }
 
         // Move to new planet
         if (MovingToNewPlanet) {
+            GoingToNextPlace = true;
+
             Vector3 direction = CurrentPlanet.transform.position - transform.position;
             transform.position = Vector3.Lerp(transform.position, CurrentPlanet.transform.position, Time.deltaTime);
 
@@ -117,7 +138,51 @@ public class Player : MonoBehaviour {
             GameManager.instance.UpdateAllPlanetMaterials();
         } else {
             orbit();
+            if (GoingToNextPlace == true) {
+                GoingToNextPlace = false;
+
+                db_currentID = Random.Range(0, db.DATA.Count);
+
+                // Set popup text
+                text_title.text = db.DATA[db_currentID].title;
+                text_message.text = db.DATA[db_currentID].message;
+
+                text_option1.text = db.DATA[db_currentID].Option1;
+                text_option2.text = db.DATA[db_currentID].Option2;
+                text_option3.text = db.DATA[db_currentID].Option3;
+
+                showPopup = true;
+            }
+   
         }
+
+        if (showPopup) {
+            Popup.SetActive(true);
+        }
+        else {
+            Popup.SetActive(false);
+        }
+    }
+
+    public void Option1() {
+        energy += db.DATA[db_currentID].Option1_Energy;
+        scrap  += db.DATA[db_currentID].Option1_Scrap;
+        people += db.DATA[db_currentID].Option1_Peaple;
+        showPopup = false;
+    }
+
+    public void Option2() {
+        energy += db.DATA[db_currentID].Option2_Energy;
+        scrap  += db.DATA[db_currentID].Option2_Scrap;
+        people += db.DATA[db_currentID].Option2_Peaple;
+        showPopup = false;
+    }
+
+    public void Option3() {
+        energy += db.DATA[db_currentID].Option3_Energy;
+        scrap  += db.DATA[db_currentID].Option3_Scrap;
+        people += db.DATA[db_currentID].Option3_Peaple;
+        showPopup = false;
     }
 
     float x;
