@@ -35,6 +35,8 @@ public class GenPlanet : MonoBehaviour
 
         InitAsIcosohedron();
         Subdivide(1);
+        
+        
 
         // When we begin extruding polygons, we'll need each one to know who its immediate
         //neighbors are. Calculate that now.

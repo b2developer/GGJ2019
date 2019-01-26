@@ -94,6 +94,8 @@ public class PlanetSystemGeneration : MonoBehaviour {
 
         GameManager.instance.UpdateAllPlanetLines();
         GameManager.instance.UpdateAllPlanetMaterials();
+
+        GameManager.instance.loading = true;
     }
 
     private void OnDrawGizmos() {

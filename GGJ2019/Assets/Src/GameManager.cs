@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour {
 
@@ -20,6 +21,9 @@ public class GameManager : MonoBehaviour {
     [HideInInspector] public Material lineRendererMat_Light;
     public Planet[] planets;
 
+    [HideInInspector] public bool loading;
+    public Text loadingText;
+
     bool init = false;
     
     private void Init() {
@@ -30,11 +34,11 @@ public class GameManager : MonoBehaviour {
 
         // Set Line Renderer Dark
         lineRendererMat_Dark = new Material(Shader.Find("Unlit/LineShader"));
-        lineRendererMat_Dark.SetColor("_Color", new Color(1, 1, 1, 0.2f));
+        lineRendererMat_Dark.SetColor("_Color", new Color(1, 1, 1, 0.1f));
 
         // Set Line Renderer Light
         lineRendererMat_Light = new Material(Shader.Find("Unlit/LineShader"));
-        lineRendererMat_Light.SetColor("_Color", new Color(0, 1, 0, 1));
+        lineRendererMat_Light.SetColor("_Color", new Color(0, 1, 0, 0.5f));
 
         init = true;
         gm = this;
@@ -42,6 +46,14 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         if (!init) Init();
+    }
+
+    private void Update() {
+        if (loading) {
+            loadingText.gameObject.SetActive(false);
+        } else {
+            loadingText.gameObject.SetActive(true);
+        }
     }
 
     public void UpdateAllPlanetMaterials() {

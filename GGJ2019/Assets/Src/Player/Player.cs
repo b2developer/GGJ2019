@@ -54,6 +54,8 @@ public class Player : MonoBehaviour {
             Vector3 direction = CurrentPlanet.transform.position - transform.position;
             transform.position = Vector3.Lerp(transform.position, CurrentPlanet.transform.position, Time.deltaTime);
 
+            transform.LookAt(CurrentPlanet.transform);
+
             if (Vector3.Distance(transform.position, CurrentPlanet.transform.position) < distanceFromPlanet) {
                 MovingToNewPlanet = false;
                 playerCamera.pivot = null;
