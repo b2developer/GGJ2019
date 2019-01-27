@@ -175,7 +175,7 @@ public class ProceduralSphere : MonoBehaviour
         ground = Color.Lerp(ground, average, colourBlend);
         overground = Color.Lerp(overground, average, colourBlend);
 
-        transform.localScale = Vector3.one * (Random.value * 2.0f + 1.0f);
+        transform.localScale = Vector3.one * (Random.value + 0.5f);
 
         AlterVertices(matrix, matrix.GetLength(0), matrix.GetLength(1), matrix.GetLength(2), Random.value * 0.1f);
 

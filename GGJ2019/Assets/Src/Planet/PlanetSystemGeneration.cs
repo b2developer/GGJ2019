@@ -41,12 +41,7 @@ public class PlanetSystemGeneration : MonoBehaviour {
     public bool ShowPlanetGizmos;
 
     private void Awake() {
-        //StartCoroutine( GeneratePlanetSystems() );
-    }
-
-    public void StartGeneratePlanetSystems() {
-        StartCoroutine(GeneratePlanetSystems());
-
+        StartCoroutine( GeneratePlanetSystems() );
     }
 
 
@@ -159,7 +154,6 @@ public class PlanetSystemGeneration : MonoBehaviour {
                     if (j == 0) {
                         GameManager.instance.player.CurrentPlanet = p;
                         GameManager.instance.player.CurrentZone = z;
-                        GameManager.instance.player.playerCamera.pivot = p.gameObject;
                     }
                 }
                 else {

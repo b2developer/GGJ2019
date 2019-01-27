@@ -26,8 +26,23 @@ public class Player : MonoBehaviour {
     public TextMeshProUGUI text_option3;
     bool showPopup;
     bool GoingToNextPlace;
-    DataBase db;
     int db_currentID;
+    DataBase db;
+
+    [Header("Moduals")]
+    public GameObject UpgradeUI;
+    public int cost_e_mk1, cost_e_mk2;
+    public int cost_s_mk1, cost_s_mk2;
+    public int cost_p_mk1, cost_p_mk2;
+    public int cost_eff_mk1, cost_eff_mk2;
+    public GameObject shipModel, upgradeShipModel;
+    bool showUpgrade;
+    [HideInInspector] public bool e_mk1, e_mk2;
+    [HideInInspector] public bool s_mk1, s_mk2;
+    [HideInInspector] public bool p_mk1, p_mk2;
+    [HideInInspector] public bool eff_mk1, eff_mk2;
+
+
 
     GameObject highlightPlanet;
 
@@ -113,7 +128,7 @@ public class Player : MonoBehaviour {
             // Show warp points
             for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++)
                 if (GameManager.instance.planetSystemGeneration.zones[i].go != CurrentZone.go)
-                    GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(0).gameObject.SetActive(this);
+                    GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(1).gameObject.SetActive(true);
 
             RaycastHit hit;
             for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++) {
@@ -192,26 +207,110 @@ public class Player : MonoBehaviour {
         else {
             Popup.SetActive(false);
         }
+
+        if (Input.GetKeyDown(KeyCode.E)) {
+            showUpgrade = !showUpgrade;
+        }
+
+        if (showUpgrade) {
+            if (e_mk1) upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(0);
+            if (e_mk2) upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(1);
+
+            if (s_mk1) upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(2);
+            if (s_mk2) upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(3);
+
+            if (p_mk1) upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(4);
+            if (p_mk2) upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(5);
+
+            if (eff_mk1) upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(6);
+            if (eff_mk2) upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(7);
+
+            UpgradeUI.SetActive(true);
+        } else {
+            UpgradeUI.SetActive(false);
+        }
     }
 
     public void Option1() {
         energy += db.DATA[db_currentID].Option1_Energy;
+        if (e_mk1) {
+            energy += (int)(db.DATA[db_currentID].Option1_Energy * 0.1f);
+        } if (e_mk2) {
+            energy += (int)(db.DATA[db_currentID].Option1_Energy * 0.15f);
+        }
+
         scrap  += db.DATA[db_currentID].Option1_Scrap;
+        if (s_mk1) {
+            scrap += (int)(db.DATA[db_currentID].Option1_Scrap * 0.1f);
+        }
+        if (s_mk2) {
+            scrap += (int)(db.DATA[db_currentID].Option1_Scrap * 0.15f);
+        }
+
         people += db.DATA[db_currentID].Option1_Peaple;
+        if (p_mk1) {
+            people += (int)(db.DATA[db_currentID].Option1_Peaple * 0.1f);
+        }
+        if (p_mk2) {
+            people += (int)(db.DATA[db_currentID].Option1_Peaple * 0.15f);
+        }
+
         showPopup = false;
     }
 
     public void Option2() {
         energy += db.DATA[db_currentID].Option2_Energy;
+        if (e_mk1) {
+            energy += (int)(db.DATA[db_currentID].Option1_Energy * 0.1f);
+        }
+        if (e_mk2) {
+            energy += (int)(db.DATA[db_currentID].Option1_Energy * 0.15f);
+        }
+
         scrap  += db.DATA[db_currentID].Option2_Scrap;
+        if (s_mk1) {
+            scrap += (int)(db.DATA[db_currentID].Option1_Scrap * 0.1f);
+        }
+        if (s_mk2) {
+            scrap += (int)(db.DATA[db_currentID].Option1_Scrap * 0.15f);
+        }
+
         people += db.DATA[db_currentID].Option2_Peaple;
+        if (p_mk1) {
+            people += 3;
+        }
+        if (p_mk2) {
+            people += 3;
+        }
+
         showPopup = false;
     }
 
     public void Option3() {
         energy += db.DATA[db_currentID].Option3_Energy;
+        if (e_mk1) {
+            energy += (int)(db.DATA[db_currentID].Option1_Energy * 0.1f);
+        }
+        if (e_mk2) {
+            energy += (int)(db.DATA[db_currentID].Option1_Energy * 0.15f);
+        }
+
         scrap  += db.DATA[db_currentID].Option3_Scrap;
+        if (s_mk1) {
+            scrap += (int)(db.DATA[db_currentID].Option1_Scrap * 0.1f);
+        }
+        if (s_mk2) {
+            scrap += (int)(db.DATA[db_currentID].Option1_Scrap * 0.15f);
+        }
+
         people += db.DATA[db_currentID].Option3_Peaple;
+        if (p_mk1) {
+            people += 3;
+        }
+        if (p_mk2) {
+            people += 3;
+        }
+
         showPopup = false;
     }
 
@@ -235,9 +334,12 @@ public class Player : MonoBehaviour {
             SphereCollider sc = CurrentZone.go.AddComponent<SphereCollider>();
             sc.radius = 10;
 
-            int energyAmount = (int)Vector3.Distance(transform.position, ZoneToWarp.go.transform.position);
+            float energyAmount = (int)Vector3.Distance(transform.position, ZoneToWarp.go.transform.position);
             Debug.Log(energyAmount);
-            energy -= energyAmount;
+            if (eff_mk1) energyAmount *= 0.95f;
+            if (eff_mk2) energyAmount *= 0.90f;
+
+            energy -= (int)energyAmount;
 
             CurrentZone = ZoneToWarp;
             Destroy(CurrentZone.go.GetComponent<SphereCollider>());
@@ -247,7 +349,77 @@ public class Player : MonoBehaviour {
             MovingToNewPlanet = true;
         }
         for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++)
-            GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(0).gameObject.SetActive(false);
+            GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(1).gameObject.SetActive(false);
 
+    }
+
+    public void AddModual(int type) {
+        
+        switch (type) {
+            case 0:
+                if (scrap >= cost_e_mk1) {
+                    e_mk1 = true;
+                    scrap -= cost_e_mk1;
+                    shipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                    upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                }
+                break;
+            case 1:
+                if (scrap >= cost_e_mk2) {
+                    e_mk2 = true;
+                    scrap -= cost_e_mk2;
+                    shipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                    upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                }
+                break;
+            case 2:
+                if (scrap >= cost_s_mk1) {
+                    s_mk1 = true;
+                    scrap -= cost_s_mk1;
+                    shipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                    upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                }
+                break;
+            case 3:
+                if (scrap >= cost_s_mk2) {
+                    s_mk2 = true;
+                    scrap -= cost_s_mk2;
+                    shipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                    upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                }
+                break;
+            case 4:
+                if (scrap >= cost_p_mk1) {
+                    p_mk1 = true;
+                    scrap -= cost_p_mk1;
+                    shipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                    upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                }
+                break;
+            case 5:
+                if (scrap >= cost_p_mk2) {
+                    p_mk2 = true;
+                    scrap -= cost_p_mk2;
+                    shipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                    upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                }
+                break;
+            case 6:
+                if (scrap >= cost_eff_mk1) {
+                    eff_mk1 = true;
+                    scrap -= cost_eff_mk1;
+                    shipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                    upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                }
+                break;
+            case 7:
+                if (scrap >= cost_eff_mk2) {
+                    eff_mk2 = true;
+                    scrap -= cost_eff_mk2;
+                    shipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                    upgradeShipModel.GetComponent<ShipAnimator>().EnableModule(type);
+                }
+                break;
+        }
     }
 }

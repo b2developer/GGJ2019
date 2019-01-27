@@ -20,9 +20,9 @@ public class Planet : MonoBehaviour {
         UpdateLines();
 
         // Create Gen Planet
-        GenPlanet gen = gameObject.AddComponent<GenPlanet>();
-        gen.m_Material = new Material(Shader.Find("Custom/VertexColoredShader"));
-        gen.GeneratePlanet();
+        //GenPlanet gen = gameObject.AddComponent<GenPlanet>();
+        //gen.m_Material = new Material(Shader.Find("Custom/VertexColoredShader"));
+        //gen.GeneratePlanet();
 
         for (int i = 0; i < transform.childCount; i++) {
             if (transform.GetChild(i).GetComponent<LineRenderer>() == null) {
