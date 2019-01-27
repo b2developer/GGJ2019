@@ -128,7 +128,7 @@ public class Player : MonoBehaviour {
             // Show warp points
             for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++)
                 if (GameManager.instance.planetSystemGeneration.zones[i].go != CurrentZone.go)
-                    GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(0).gameObject.SetActive(this);
+                    GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(1).gameObject.SetActive(true);
 
             RaycastHit hit;
             for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++) {
@@ -277,10 +277,10 @@ public class Player : MonoBehaviour {
 
         people += db.DATA[db_currentID].Option2_Peaple;
         if (p_mk1) {
-            people += (int)(db.DATA[db_currentID].Option1_Peaple * 0.1f);
+            people += 3;
         }
         if (p_mk2) {
-            people += (int)(db.DATA[db_currentID].Option1_Peaple * 0.15f);
+            people += 3;
         }
 
         showPopup = false;
@@ -305,10 +305,10 @@ public class Player : MonoBehaviour {
 
         people += db.DATA[db_currentID].Option3_Peaple;
         if (p_mk1) {
-            people += (int)(db.DATA[db_currentID].Option1_Peaple * 0.1f);
+            people += 3;
         }
         if (p_mk2) {
-            people += (int)(db.DATA[db_currentID].Option1_Peaple * 0.15f);
+            people += 3;
         }
 
         showPopup = false;
@@ -349,7 +349,7 @@ public class Player : MonoBehaviour {
             MovingToNewPlanet = true;
         }
         for (int i = 0; i < GameManager.instance.planetSystemGeneration.zones.Count; i++)
-            GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(0).gameObject.SetActive(false);
+            GameManager.instance.planetSystemGeneration.zones[i].planets[0].transform.GetChild(1).gameObject.SetActive(false);
 
     }
 
