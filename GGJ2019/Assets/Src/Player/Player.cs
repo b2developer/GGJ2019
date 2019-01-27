@@ -447,6 +447,11 @@ public class Player : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.tag == "Explostion")
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+    }
+
     public int CalculateScore() {
 
         int score = (people * 50);

@@ -125,7 +125,7 @@ public class PlanetSystemGeneration : MonoBehaviour {
                     billboard.transform.parent = planet.transform;
                     billboard.AddComponent<Billboard>();
                     MeshRenderer wpmr = billboard.GetComponent<MeshRenderer>();
-                    wpmr.sharedMaterial = new Material(Shader.Find("Unlit/Transparent Cutout"));
+                    wpmr.sharedMaterial = new Material(Shader.Find("Unlit/CutoutTransparentColor"));
                     wpmr.sharedMaterial.SetTexture("_MainTex", WarpRedical);
 
                     billboard.SetActive(false);
