@@ -105,5 +105,52 @@ public class DataBase : MonoBehaviour {
             "Take their spare scrap", 50, 0, 0, // Scrap, Energy, People
             "Offer to take some of them faster", 0, 0, 3  // Scrap, Energy, People
             ));
+
+        DATA.Add(new DB(
+            "Destablized planet",
+            "the core of this planet is destablized and starting to break the planet up. we could try and rescue " +
+            "the residentds here, collect the metals being poured out on the surface or try and collect some energy",
+
+            "Rescue the residents", 0,5,0,
+            "Collect the metals", 100,0,0,
+            "Collect energy", 0,100,0
+            ));
+
+        DATA.Add(new DB(
+            "Terror face",
+            "you come accrose a civillian caraven however when you contact them they are so terrafied of your face they imidiatly offer you anything of your choice",
+
+            "Take scrap from them", 100,0,0,
+            "Take energy from them", 0,100,0,
+            "Take a person from them", 0,0,1
+            ));
+
+        DATA.Add(new DB(
+            "wasing of the wanting",
+            "you come acrose an old town located on the planet and are contacted by the locals. 'wasin been wanting for the moving or the fortin, wasin comin of the flein and scared'",
+
+            "wasin the wanting of the moving", 0,100,0,
+            "wasin the wanting of the fortin", 100,0,0,
+            "wasin flein and the scare be takin", 0,0,2
+            ));
+
+        DATA.Add(new DB(
+            "DImensions",
+            "as you arrive you recive a strange comunication... from your self! apparently this is an ulternative version of you about to fall to the cataclisim, you can spend some energy to send " +
+            "over some scrap or people",
+
+            "Send over scrap", 150,-25,0,
+            "Send over people", 0,-25,5,
+            "Ignore", 0,0,0
+            ));
+
+        DATA.Add(new DB(
+            "Pirates!",
+            "as you exit from ftl you are suddenly jumped on by a bunch of pirates! you can try and board them and fight them off or spend energy, alternativly you can just bribe them with a lot of scrap",
+
+            "Board them!", 200, 0, -2,
+            "Fire all guns!", 100, -50, 0,
+            "Bribe them", -100, 0, 0
+            ));
     }
 }
