@@ -684,7 +684,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0
@@ -3023,6 +3023,11 @@ MonoBehaviour:
   MaxPlanets: 20
   MinPlanetsDistance: 10
   MaxPlanetsDistance: 50
+  sphereMesh: {fileID: 4300000, guid: 24a40f2231347c94f9da6620ffb35982, type: 3}
+  vertexColourMaterial: {fileID: 2100000, guid: fbf8cd6bc95fdf14683e04a5630d96b3,
+    type: 2}
+  atmosphereMaterial: {fileID: 2100000, guid: b881fc376b59e0245be827a73dac1421, type: 2}
+  spherePrefab: {fileID: 100000, guid: 24a40f2231347c94f9da6620ffb35982, type: 3}
   zones: []
   ShowZoneGizmos: 1
   ShowPlanetGizmos: 0
@@ -5533,7 +5538,7 @@ MonoBehaviour:
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
-  m_firstOverflowCharacterIndex: -1
+  m_firstOverflowCharacterIndex: 0
   m_linkedTextComponent: {fileID: 0}
   m_isLinkedTextComponent: 0
   m_isTextTruncated: 0

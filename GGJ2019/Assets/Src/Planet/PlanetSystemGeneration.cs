@@ -21,6 +21,11 @@ public class PlanetSystemGeneration : MonoBehaviour {
     public float MinPlanetsDistance = 10;
     public float MaxPlanetsDistance = 50;
 
+    public Mesh sphereMesh;
+    public Material vertexColourMaterial;
+    public Material atmosphereMaterial;
+    public GameObject spherePrefab;
+
     // Private
     [System.Serializable]
     public struct Zone {
@@ -98,6 +103,24 @@ public class PlanetSystemGeneration : MonoBehaviour {
                 GameObject planet = new GameObject();
                 planet.name = "Planet";
                 planet.transform.parent = z.go.transform;
+
+                MeshFilter mf = planet.AddComponent<MeshFilter>();
+                mf.mesh = sphereMesh;
+
+                MeshRenderer mr = planet.AddComponent<MeshRenderer>();
+                mr.material = vertexColourMaterial;
+                
+                ProceduralSphere ps = planet.AddComponent<ProceduralSphere>();
+                ps.atmosphereMaterial = atmosphereMaterial;
+                ps.spherePrefab = spherePrefab;
+                ps.meshFilter = mf;
+
+                ps.colourBias = 5.0f;
+                ps.colourBlend = 0.24f;
+                ps.colourNoise = 0.0884f;
+
+                ps.Generate();
+
 
                 // Create billboard
                 if (i == 0) {
