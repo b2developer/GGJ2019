@@ -152,23 +152,6 @@ public class DataBase : MonoBehaviour {
             "Fire all guns!", 100, -50, 0,
             "Bribe them", -100, 0, 0
             ));
-
-        DATA.Add(new DB(
-            "",
-            "",
-
-            "", 0,0,0,
-            "", 0,0,0,
-            "", 0,0,0
-            ));
-
-        DATA.Add(new DB(
-            "",
-            "",
-
-            "", 0, 0, 0,
-            "", 0, 0, 0,
-            "", 0, 0, 0
-            ));
+        
     }
 }

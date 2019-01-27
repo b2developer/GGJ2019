@@ -10,6 +10,10 @@ public class Player : MonoBehaviour {
     [HideInInspector] public Planet CurrentPlanet;
     [HideInInspector] public PlayerCamera playerCamera;
 
+    [Header("Explosion")]
+    public GameObject explosion;
+    float explosionScail;
+
     public PlanetSystemGeneration.Zone CurrentZone;
 
     [Header("Resources")]
@@ -60,6 +64,8 @@ public class Player : MonoBehaviour {
         vistedPlanets = 0;
         timesWarped = 0;
 
+        explosionScail = 15;
+
         // Create highlightPlanet
         highlightPlanet = GameObject.CreatePrimitive(PrimitiveType.Quad);
         highlightPlanet.transform.localScale = new Vector3(5, 5, 5);
@@ -87,6 +93,9 @@ public class Player : MonoBehaviour {
             return;
         }
 
+        // Expand Explosion
+        explosion.transform.localScale = Vector3.Lerp(explosion.transform.localScale, new Vector3(explosionScail, explosionScail, explosionScail), Time.deltaTime);
+
         // Highlight Planet
         if (Input.GetMouseButtonDown(0) && !playerCamera.isDragging) {
             RaycastHit hit;
@@ -112,6 +121,11 @@ public class Player : MonoBehaviour {
 
         }
 
+        // Exit to main menu
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
+
         // Select To Move
         if (SelectedPlanet != null && Input.GetKeyDown(KeyCode.Return) && !showPopup) {
             if (CurrentPlanet.PlanetsInZone.Contains(SelectedPlanet.gameObject)) {
@@ -120,6 +134,8 @@ public class Player : MonoBehaviour {
                     CurrentPlanet = SelectedPlanet;
                     MovingToNewPlanet = true;
                     energy -= energyAmount;
+
+                    explosionScail += energyAmount;
                 }
             }
         }
@@ -159,13 +175,11 @@ public class Player : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(0) && !playerCamera.isDragging) {
                 WarpShip();
-                timesWarped++;
             }
         }
         // Warp
         else if (Input.GetKeyUp(KeyCode.Space) && !showPopup) {
             WarpShip();
-            timesWarped++;
         }
 
         // Move to new planet
@@ -180,8 +194,6 @@ public class Player : MonoBehaviour {
             if (Vector3.Distance(transform.position, CurrentPlanet.transform.position) < distanceFromPlanet) {
                 MovingToNewPlanet = false;
                 playerCamera.pivot = null;
-
-                vistedPlanets++;
             }
 
             GameManager.instance.UpdateAllPlanetMaterials();
@@ -339,6 +351,10 @@ public class Player : MonoBehaviour {
     void WarpShip() {
         GameManager.instance.UpdateAllPlanetMaterials();
         if (Warp) {
+            explosionScail += (int)Vector3.Distance(transform.position, ZoneToWarp.go.transform.position) / 5;
+            vistedPlanets++;
+            MusicPlayer.instance.PlayRandom();
+
             SphereCollider sc = CurrentZone.go.AddComponent<SphereCollider>();
             sc.radius = 10;
 
