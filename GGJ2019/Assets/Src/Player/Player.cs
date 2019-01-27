@@ -42,7 +42,8 @@ public class Player : MonoBehaviour {
     [HideInInspector] public bool p_mk1, p_mk2;
     [HideInInspector] public bool eff_mk1, eff_mk2;
 
-
+    private int vistedPlanets;
+    private int timesWarped;
 
     GameObject highlightPlanet;
 
@@ -55,6 +56,9 @@ public class Player : MonoBehaviour {
         db.Init();
         playerCamera = Camera.main.GetComponent<PlayerCamera>();
         playerCamera.player = this;
+            
+        vistedPlanets = 0;
+        timesWarped = 0;
 
         // Create highlightPlanet
         highlightPlanet = GameObject.CreatePrimitive(PrimitiveType.Quad);
@@ -155,11 +159,13 @@ public class Player : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(0) && !playerCamera.isDragging) {
                 WarpShip();
+                timesWarped++;
             }
         }
         // Warp
         else if (Input.GetKeyUp(KeyCode.Space) && !showPopup) {
             WarpShip();
+            timesWarped++;
         }
 
         // Move to new planet
@@ -174,6 +180,8 @@ public class Player : MonoBehaviour {
             if (Vector3.Distance(transform.position, CurrentPlanet.transform.position) < distanceFromPlanet) {
                 MovingToNewPlanet = false;
                 playerCamera.pivot = null;
+
+                vistedPlanets++;
             }
 
             GameManager.instance.UpdateAllPlanetMaterials();
@@ -421,5 +429,28 @@ public class Player : MonoBehaviour {
                 }
                 break;
         }
+    }
+
+    public int CalculateScore() {
+
+        int score = (people * 50);
+        score += (energy + scrap) * 2;
+
+        score += vistedPlanets * 10;
+        score += timesWarped * 25;
+
+        if (e_mk1) score += 75;
+        if (e_mk2) score += 125;
+
+        if (s_mk1) score += 75;
+        if (s_mk2) score += 125;
+
+        if (p_mk1) score += 75;
+        if (p_mk2) score += 125;
+
+        if (eff_mk1) score += 75;
+        if (eff_mk2) score += 125;
+
+        return score;
     }
 }
